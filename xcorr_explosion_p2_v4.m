@@ -225,6 +225,12 @@ for fidx = 1:size(FileList,1)
                             % Get signal and pad after
                             % pad = ones(e-length(yFilt),1)*eps;
                             e = length(yFilt);
+                            if e<=s
+                                % Sometimes e gets set to something before
+                                % s, avoid a crash by skipping.
+                                warning('Segment is too short to cross correlate. Skipping.')
+                                continue
+                            end
                             yDet = yFilt(s:e);
                             % yDet = [ydet;pad];
                             % Get noise before signal.
